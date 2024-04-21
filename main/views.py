@@ -1,7 +1,8 @@
-from main.serializers import VendorSerializer,ProductSerializer,CustomerSerializer,OrderSerializer,OrderDetailSerializer
+from main.serializers import VendorSerializer,ProductSerializer,ProductDetailSerializer,ProductRatingSerializer,CustomerAddressSerializer,CustomerSerializer,OrderSerializer,OrderDetailSerializer
 from rest_framework import generics
-from main.models import Vendor,Product,Customer,Order,OrderItems
+from main.models import Vendor,Product,Customer,Order,CustomerAddress,ProductRating
 from main.pagination import CustomPagination
+from rest_framework.viewsets import ModelViewSet
 
 class VendorList(generics.ListCreateAPIView):
     queryset = Vendor.objects.all()
@@ -21,11 +22,10 @@ class ProductList(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
     pagination_class = CustomPagination
     
-    
-    
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductDetailSerializer
+    
     
 class CustomerList(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
@@ -34,6 +34,7 @@ class CustomerList(generics.ListCreateAPIView):
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    
     
 class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
@@ -50,3 +51,11 @@ class OrderDetail(generics.ListAPIView):
         order_items = order.order_items
         return order_items
     
+class CustomerAddressViewSet(ModelViewSet):
+    serializer_class = CustomerAddressSerializer
+    queryset = CustomerAddress.objects.all()
+    
+    
+class ProductRatingViewSet(ModelViewSet):
+    serializer_class = ProductRatingSerializer
+    queryset = ProductRating.objects.all()

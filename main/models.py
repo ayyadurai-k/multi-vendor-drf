@@ -45,3 +45,21 @@ class OrderItems(models.Model):
     
     def __str__(self):
         return self.product.title
+    
+class CustomerAddress(models.Model):
+    customer = models.ForeignKey(Customer,related_name="customer_address",on_delete=models.CASCADE)
+    address = models.TextField()
+    default_address = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.address
+    
+class ProductRating(models.Model):
+    customer = models.ForeignKey(Customer,related_name="product_ratings",on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,related_name="ratings",on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    reviews = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.rating}-{self.reviews}'

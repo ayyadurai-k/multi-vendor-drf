@@ -1,6 +1,11 @@
 from django.urls import path
-from main.views import VendorList,VendorDetail,ProductList,ProductDetail,CustomerList,CustomerDetail,OrderList,OrderDetail
+from main.views import VendorList,VendorDetail,CustomerAddressViewSet,ProductRatingViewSet,ProductList,ProductDetail,CustomerList,CustomerDetail,OrderList,OrderDetail
+from rest_framework.routers import DefaultRouter
 
+router = DefaultRouter()
+# router = SimpleRouter() #DOESN'T PROVIDES APIs
+router.register('address',CustomerAddressViewSet)
+router.register('product-rating',ProductRatingViewSet)
 
 urlpatterns = [
     path('vendors/',VendorList.as_view(),name="list_vendors"),
@@ -12,3 +17,5 @@ urlpatterns = [
     path('orders/',OrderList.as_view(),name="list_orders"),
     path('order/<int:pk>/',OrderDetail.as_view(),name="detail_order"),
 ]
+
+urlpatterns += router.urls
